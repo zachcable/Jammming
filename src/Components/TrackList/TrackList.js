@@ -5,19 +5,23 @@ import Track from '../Track/Track';
 
 class TrackList extends Component {
   render(){
-    console.log(this.props.tracks);
-    try{
-      this.props.tracks.map(track=>{console.log(track);})
+    //console.log(this.props.tracks);
+    //this.props.tracks.then(track=>{console.log(track);});
+    /*try{
+      this.props.tracks.map(track=>{
+        console.log(track);
+        return track;
+      })
     }
     catch(error){
-      console.log(error.message);
-    }
+      console.log(error.message)
+    }*/
       //console.log(this.props.tracks)
 
     return (
       <div className="TrackList">
           {this.props.tracks.map(track =>{
-            console.log(track);
+            //console.log(track);
             return (
               <Track
                 track={track}

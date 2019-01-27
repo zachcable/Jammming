@@ -9,35 +9,9 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      searchResults: [
-          {
-            name:'Hard Code Search Results Name 1',
-            artist:'hardcode results Artist 1',
-            album:'hardcode results Album 1',
-            id:'hardode results id 1'
-          },
-          {
-            name:'Hard Code Search Results Name 2',
-            artist:'hardcode results Artist 2',
-            album:'hardcode results Album 2',
-            id:'hardode results id 2'
-          }
-        ],
+      searchResults: [],
       playlistName:'hardcode playlist name',
-      playlistTracks:[
-          {
-            name:'Hardcode playlist tracks name 1',
-            artist:'hardcode playlist tracks artist 1',
-            album:'hardcode playlist tracks album 1',
-            id:'hardcode playlist tracks id 1'
-          },
-          {
-            name:'Hardcode playlist tracks name 2',
-            artist:'hardcode playlist tracks artist 2',
-            album:'hardcode playlist tracks album 2',
-            id:'hardcode playlist tracks id 2'
-          }
-        ]
+      playlistTracks:[]
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack=this.removeTrack.bind(this);
@@ -64,13 +38,20 @@ class App extends Component {
   updatePlaylistName(name){
     this.setState({playlistName:name});
   }
-  savePlaylist(){
+  async savePlaylist(){
     let trackURIs=this.state.playlistTracks.map(track=> {return track.uri});
-    return trackURIs;
+    Spotify.savePlaylist(this.state.playlistName, trackURIs);
+    //this.updatePlaylistName('New Playlist');
+    this.setState({playlistTracks:[], playlistName:'New Playlist'});
   }
-  search(term){
+  async search(term){
     console.log(term);
-    this.setState({searchResults:Spotify.search(term)});
+    if(term===''){
+      term = 'default search';
+    }
+    let results = await Spotify.search(term);
+    console.log(results);
+    this.setState({searchResults: results});
   }
   render() {
     return (
@@ -95,3 +76,29 @@ class App extends Component {
 }
 
 export default App;
+/*
+{
+  name:'Hard Code Search Results Name 1',
+  artist:'hardcode results Artist 1',
+  album:'hardcode results Album 1',
+  id:'hardode results id 1'
+},
+{
+  name:'Hard Code Search Results Name 2',
+  artist:'hardcode results Artist 2',
+  album:'hardcode results Album 2',
+  id:'hardode results id 2'
+}
+{
+  name:'Hardcode playlist tracks name 1',
+  artist:'hardcode playlist tracks artist 1',
+  album:'hardcode playlist tracks album 1',
+  id:'hardcode playlist tracks id 1'
+},
+{
+  name:'Hardcode playlist tracks name 2',
+  artist:'hardcode playlist tracks artist 2',
+  album:'hardcode playlist tracks album 2',
+  id:'hardcode playlist tracks id 2'
+}
+*/

@@ -11,10 +11,10 @@ class Track extends Component{
   }
   renderAction(){
     if(this.props.isRemoval){
-      return ( <a className="Track-action" onClick={this.removeTrack}>-</a> );
+      return ( <button className="Track-action" onClick={this.removeTrack}>-</button> );
     }
     else {
-      return <a className="Track-action" onClick={this.addTrack}>+</a>;
+      return <button className="Track-action" onClick={this.addTrack}>+</button>;
     }
   }
   addTrack(){
@@ -30,10 +30,11 @@ class Track extends Component{
           <h3>{this.props.track.name}</h3>
           <p>{this.props.track.artist} | {this.props.track.album}</p>
         </div>
-        <a className="Track-action">{this.renderAction()}</a>
+        {this.renderAction()}
       </div>
     );
   }
 }
 
 export default Track;
+// <a className="Track-action"></a>
